@@ -1,73 +1,83 @@
-# React + TypeScript + Vite
+## Live Coding Exercise: Searchable & Filterable List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains a simple solution to a common frontend live-coding exercise. The base functionality was completed in approximately one hour, with an additional hour spent on cleaning and polishing, using Vite and Tailwind CSS and no external libraries to demonstrate core frontend fundamentals.
 
-Currently, two official plugins are available:
+### Context
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You are building a small UI component for an internal dashboard. The component displays a list of users and allows basic interaction.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Requirements
 
-## Expanding the ESLint configuration
+### 1. Display a List
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+You are given a list of users:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```tsx
+type User = {
+  id: number
+  name: string
+  role: "admin" |"editor" |"viewer"
+  active: boolean
+}
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+const USERS:User[] = [
+  {id:1,name:"Alice",role:"admin",active:true },
+  {id:2,name:"Bob",role:"editor",active:false },
+  {id:3,name:"Charlie",role:"viewer",active:true },
+  {id:4,name:"Diana",role:"editor",active:true },
+]
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Render the list showing:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Name
+- Role
+- Active status
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+### 2. Search
+
+Add a text input that:
+
+- Filters users by **name**
+- Is **case-insensitive**
+- Updates results as the user types
+
+---
+
+### 3. Filter
+
+Add:
+
+- A dropdown to filter by **role** (`All`, `admin`, `editor`, `viewer`)
+- A checkbox to show **only active users**
+
+Filters should be combinable with search.
+
+---
+
+### 4. Performance & UX
+
+- Avoid unnecessary re-renders
+- Show a “No results found” state when applicable
+- Keep the code readable and well-structured
+
+---
+
+## Constraints
+
+- React + TypeScript
+- No external libraries
+- Functional components only
+
+---
+
+## Bonus (If Time Allows)
+
+- Debounce the search input
+- Highlight matching text in names
+- Extract logic into a reusable hook
